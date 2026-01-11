@@ -1,0 +1,13 @@
+{
+  "name": "claude-code-zellij-status",
+  "owner": {
+    "name": "thein"
+  },
+  "plugins": [
+    {
+      "name": "cc-zjstatus",
+      "source": "./cc-zjstatus",
+      "description": "Monitor Claude Code activity across multiple Zellij panes in real-time."
+    }
+  ]
+}
