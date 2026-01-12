@@ -84,7 +84,6 @@ Restart your Zellij session or open a new tab to apply the layout changes.
 ## How It Works
 
 ```mermaid
-<<<<<<< HEAD
 flowchart TB
     subgraph "Claude Code"
         CC[Claude Code CLI]
@@ -109,44 +108,6 @@ flowchart TB
     ActivityHook -->|"Write state"| StateFile
     ActivityHook -->|"pipe command"| ZellijPipe
     ZellijPipe --> StatusBar
-=======
-flowchart LR
-    subgraph panes [Claude Code Panes]
-        CC1[◔ api-server]
-        CC2[✓ frontend]
-        CC3[? pipeline]
-    end
-
-    subgraph hooks [Hook Events]
-        direction TB
-        E1[PreToolUse]
-        E2[PostToolUse]
-        E3[Stop]
-        E4[Notification]
-        E5[PermissionRequest]
-    end
-
-    subgraph processing [Processing]
-        AH[[claude-activity-hook.sh]]
-        SF[(session.json)]
-    end
-
-    subgraph output [Status Bar]
-        ZJ[zjstatus<br/>◔ api-server  ✓ frontend  ? pipeline]
-    end
-
-    CC1 & CC2 & CC3 --> hooks
-    hooks --> AH
-    AH <--> SF
-    AH -->|zellij pipe| ZJ
-
-    style CC1 fill:#0074d9,color:#fff
-    style CC2 fill:#2ecc40,color:#fff
-    style CC3 fill:#ff4136,color:#fff
-    style ZJ fill:#1a1a2e,color:#4166F5
-    style AH fill:#333,color:#fff
-    style SF fill:#333,color:#ffdc00
->>>>>>> origin/main
 ```
 
 ### Data Flow
