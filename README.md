@@ -84,6 +84,32 @@ Restart your Zellij session or open a new tab to apply the layout changes.
 ## How It Works
 
 ```mermaid
+<<<<<<< HEAD
+flowchart TB
+    subgraph "Claude Code"
+        CC[Claude Code CLI]
+        HookEvents[Hook Events<br/>PreToolUse, PostToolUse,<br/>Stop, Notification, etc.]
+    end
+
+    subgraph "Hook Script"
+        ActivityHook[claude-activity-hook.sh<br/>Maps events → activity/color/symbol]
+    end
+
+    subgraph "Shared State"
+        StateFile["/tmp/claude-zellij-status/<br/>{session}.json"]
+    end
+
+    subgraph "Zellij + zjstatus"
+        ZellijPipe[zellij pipe]
+        StatusBar[Status Bar Display<br/>symbol project]
+    end
+
+    CC -->|"stdin JSON"| HookEvents
+    HookEvents -->|"hook_event_name<br/>tool_name"| ActivityHook
+    ActivityHook -->|"Write state"| StateFile
+    ActivityHook -->|"pipe command"| ZellijPipe
+    ZellijPipe --> StatusBar
+=======
 flowchart LR
     subgraph panes [Claude Code Panes]
         CC1[◔ api-server]
@@ -120,19 +146,19 @@ flowchart LR
     style ZJ fill:#1a1a2e,color:#4166F5
     style AH fill:#333,color:#fff
     style SF fill:#333,color:#ffdc00
+>>>>>>> origin/main
 ```
 
 ### Data Flow
 
-1. **Claude Code** triggers hooks on events (tool use, stop, etc.)
-2. **Hook script** captures the event and updates the state file
-3. **State file** stores status from all Claude Code panes
-4. **zjstatus** receives pipe message and displays combined status
+1. **Claude Code** emits hook events (PreToolUse, PostToolUse, Stop, etc.) as JSON via stdin
+2. **Hook script** parses the event and maps it to an activity, color, and symbol
+3. **State file** stores status for all Claude Code panes in the Zellij session
+4. **zjstatus** receives pipe message and displays combined status in the status bar
 
 ## Files
 
-- `claude-activity-hook.sh` - Hook script that captures Claude Code events
-- `claude-zellij-status.sh` - Status line script that refreshes zjstatus
+- `claude-activity-hook.sh` - Hook script that captures Claude Code events and updates zjstatus
 - State files stored in `/tmp/claude-zellij-status/`
 
 ## License
