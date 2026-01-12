@@ -17,8 +17,8 @@ Monitor Claude Code activity across multiple Zellij panes in real-time via zjsta
 ### Step 1: Install the Plugin
 
 ```bash
-claude add marketplace https://github.com/thoo/claude-code-zellij-status.git
-claude install plugin
+claude plugin marketplace add https://github.com/thoo/claude-code-zellij-status.git
+claude plugin install cc-zjstatus
 ```
 
 ### Step 2: Configure Zellij Layout
