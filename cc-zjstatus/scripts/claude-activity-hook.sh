@@ -71,6 +71,16 @@ case "$HOOK_EVENT" in
     PostToolUse)
         ACTIVITY="think"; COLOR="$C_GRAY"; SYMBOL="◐"; DONE=false ;;
     Notification)
+        # Check if session is already done - don't overwrite completion status
+        if [ -f "$STATE_FILE" ]; then
+            EXISTING_DONE=$(jq -r --arg pane "$ZELLIJ_PANE" '.[$pane].done // false' "$STATE_FILE" 2>/dev/null || echo "false")
+            if [ "$EXISTING_DONE" = "true" ]; then
+                # Still send zjstatus notification, but preserve done status
+                PROJECT_NAME_NOTIFY=$(basename "$CWD" 2>/dev/null || echo "?")
+                zellij -s "$ZELLIJ_SESSION" pipe "zjstatus::notify::${PROJECT_NAME_NOTIFY} ! notification" 2>/dev/null || true
+                exit 0
+            fi
+        fi
         ACTIVITY="!"; COLOR="$C_RED"; SYMBOL="!"; DONE=false ;;
     UserPromptSubmit)
         ACTIVITY="start"; COLOR="$C_YELLOW"; SYMBOL="●"; DONE=false ;;
