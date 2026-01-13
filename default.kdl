@@ -5,7 +5,7 @@ layout {
             plugin location="https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm" {
                 format_left   "{mode} #[fg=#89B4FA,bold]{session} {tabs}"
                 format_center ""
-                format_right  "{command_git_branch} {pipe_status} {notifications} {datetime}"
+                format_right  "{pipe_status} {command_git_branch} {notifications} {datetime}"
                 format_space  ""
 
                 border_enabled  "false"
@@ -33,10 +33,6 @@ layout {
                 notifications_format_unread "#[fg=#89B4FA,bg=#181825] {message} "
                 notifications_format_no_notifications ""
                 notifications_show_interval "10"
-
-                // Claude activity + context status
-                pipe_status_format "#[fg=#6C7086]│ {output}"
-                pipe_status_rendermode "dynamic"
             }
         }
     }

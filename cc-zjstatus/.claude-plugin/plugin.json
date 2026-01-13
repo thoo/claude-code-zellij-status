@@ -1,0 +1,7 @@
+{
+  "name": "cc-zjstatus",
+  "description": "Monitor Claude Code activity in Zellij status bar with real-time tab updates",
+  "author": {
+    "name": "thoo"
+  }
+}
