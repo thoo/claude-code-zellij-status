@@ -34,16 +34,40 @@ if [ ${#PROJECT_NAME} -gt 12 ]; then
 fi
 
 # =============================================================================
-# COLOR SCHEME (clrs.cc - bright but not vivid)
+# COLOR SCHEME - ANSI named colors (adapts to terminal theme)
+# Override via ~/.config/cc-zjstatus/colors.ini
+# Supported formats: ANSI names (red, bright_blue), hex (#ff4136), ANSI 256 (0..255)
 # =============================================================================
-C_GREEN="#2ecc40"   # base0B - Done/Complete
-C_YELLOW="#ffdc00"  # base0A - Active/Working
-C_BLUE="#0074d9"    # base0D - Reading/Searching
-C_AQUA="#4166F5"    # base0C - Project name text
-C_RED="#ff4136"     # base08 - Needs attention
-C_ORANGE="#ff851b"  # base09 - Bash
-C_PURPLE="#b10dc9"  # base0E - Agent/Skill
-C_GRAY="#666666"    # base03 - Thinking/Idle
+C_GREEN="green"           # Done/Complete
+C_YELLOW="yellow"         # Active/Working
+C_BLUE="blue"             # Reading/Searching
+C_AQUA="cyan"             # Writing/Editing
+C_RED="red"               # Needs attention
+C_ORANGE="bright_red"     # Bash commands (closest ANSI to orange)
+C_PURPLE="magenta"        # Agent/Skill/MCP
+C_GRAY="bright_black"     # Thinking/Idle
+C_PROJECT="cyan"          # Project name text
+
+# Load user overrides from INI config (if it exists)
+CONFIG_FILE="${HOME}/.config/cc-zjstatus/colors.ini"
+if [ -f "$CONFIG_FILE" ]; then
+    while IFS='=' read -r key value; do
+        key="${key// /}"
+        value="${value// /}"
+        [[ -z "$key" || "$key" == \#* || "$key" == \;* ]] && continue
+        case "$key" in
+            green)   C_GREEN="$value"   ;;
+            yellow)  C_YELLOW="$value"  ;;
+            blue)    C_BLUE="$value"    ;;
+            aqua)    C_AQUA="$value"    ;;
+            red)     C_RED="$value"     ;;
+            orange)  C_ORANGE="$value"  ;;
+            purple)  C_PURPLE="$value"  ;;
+            gray)    C_GRAY="$value"    ;;
+            project) C_PROJECT="$value" ;;
+        esac
+    done < "$CONFIG_FILE"
+fi
 
 # =============================================================================
 # SYMBOLS
@@ -106,10 +130,10 @@ case "$HOOK_EVENT" in
                 [ -z "$line" ] && continue
                 [ -n "$SESSIONS" ] && SESSIONS="${SESSIONS}  "
                 SESSIONS="${SESSIONS}${line}"
-            done < <(jq -r '
+            done < <(jq -r --arg proj_color "$C_PROJECT" '
                 to_entries | sort_by(.key)[] |
-                "#[fg=\(.value.color)]\(.value.symbol) #[fg=#4166F5]\(.value.project)" +
-                (if .value.context_pct then " #[fg=\(.value.ctx_color // "#2ecc40")]\(.value.context_pct)%" else "" end)
+                "#[fg=\(.value.color)]\(.value.symbol) #[fg=\($proj_color)]\(.value.project)" +
+                (if .value.context_pct then " #[fg=\(.value.ctx_color // "green")]\(.value.context_pct)%" else "" end)
             ' "$STATE_FILE" 2>/dev/null)
 
             if [ -z "$SESSIONS" ]; then
@@ -189,10 +213,10 @@ while IFS= read -r line; do
     [ -z "$line" ] && continue
     [ -n "$SESSIONS" ] && SESSIONS="${SESSIONS}  "
     SESSIONS="${SESSIONS}${line}"
-done < <(jq -r '
+done < <(jq -r --arg proj_color "$C_PROJECT" '
     to_entries | sort_by(.key)[] |
-    "#[fg=\(.value.color)]\(.value.symbol) #[fg=#4166F5]\(.value.project)" +
-    (if .value.context_pct then " #[fg=\(.value.ctx_color // "#2ecc40")]\(.value.context_pct)%" else "" end)
+    "#[fg=\(.value.color)]\(.value.symbol) #[fg=\($proj_color)]\(.value.project)" +
+    (if .value.context_pct then " #[fg=\(.value.ctx_color // "green")]\(.value.context_pct)%" else "" end)
 ' "$STATE_FILE" 2>/dev/null)
 
 # Build combined status

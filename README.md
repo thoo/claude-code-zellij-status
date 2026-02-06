@@ -44,40 +44,66 @@ Restart your Zellij session or open a new tab to apply the layout changes.
 
 ## Symbol Reference
 
-| Symbol | Color | Hex | Meaning |
-|--------|-------|-----|---------|
-| `●` | Yellow | `#ffdc00` | Working/Active |
-| `◐` | Gray | `#666666` | Thinking |
-| `◍` | Blue | `#0074d9` | Web searching |
-| `↓` | Blue | `#0074d9` | Web fetching |
-| `◔` | Blue | `#0074d9` | Reading file |
-| `◎` | Blue | `#0074d9` | Finding (glob/grep) |
-| `✎` | Aqua | `#4166F5` | Writing/Editing |
-| `⚡` | Orange | `#ff851b` | Running bash |
-| `▶` | Purple | `#b10dc9` | Agent running |
-| `▷` | Green | `#2ecc40` | Agent done |
-| `★` | Purple | `#b10dc9` | Skill |
-| `◈` | Purple | `#b10dc9` | MCP tool |
-| `◫` | Yellow | `#ffdc00` | Planning (todo) |
-| `?` | Red | `#ff4136` | Asking user |
-| `⚠` | Red | `#ff4136` | Permission needed |
-| `!` | Red | `#ff4136` | Notification |
-| `✓` | Green | `#2ecc40` | Done |
-| `◆` | Blue | `#0074d9` | Session started |
-| `○` | Gray | `#666666` | Idle |
+| Symbol | Color | Default | Meaning |
+|--------|-------|---------|---------|
+| `●` | yellow | `yellow` | Working/Active |
+| `◐` | gray | `bright_black` | Thinking |
+| `◍` | blue | `blue` | Web searching |
+| `↓` | blue | `blue` | Web fetching |
+| `◔` | blue | `blue` | Reading file |
+| `◎` | blue | `blue` | Finding (glob/grep) |
+| `✎` | aqua | `cyan` | Writing/Editing |
+| `⚡` | orange | `bright_red` | Running bash |
+| `▶` | purple | `magenta` | Agent running |
+| `▷` | green | `green` | Agent done |
+| `★` | purple | `magenta` | Skill |
+| `◈` | purple | `magenta` | MCP tool |
+| `◫` | yellow | `yellow` | Planning (todo) |
+| `?` | red | `red` | Asking user |
+| `⚠` | red | `red` | Permission needed |
+| `!` | red | `red` | Notification |
+| `✓` | green | `green` | Done |
+| `◆` | blue | `blue` | Session started |
+| `○` | gray | `bright_black` | Idle |
 
-## Color Scheme (clrs.cc)
+## Color Scheme
 
-| Color | Hex | Usage |
-|-------|-----|-------|
-| Green | `#2ecc40` | Complete/Done |
-| Yellow | `#ffdc00` | Active/Working |
-| Blue | `#0074d9` | Reading/Searching |
-| Aqua | `#4166F5` | Project name text, Writing |
-| Red | `#ff4136` | Needs attention |
-| Orange | `#ff851b` | Bash commands |
-| Purple | `#b10dc9` | Agent/Skill/MCP |
-| Gray | `#666666` | Thinking/Idle |
+By default, colors use ANSI named colors so they adapt to your terminal theme:
+
+| Name | Default | Usage |
+|------|---------|-------|
+| green | `green` | Complete/Done |
+| yellow | `yellow` | Active/Working |
+| blue | `blue` | Reading/Searching |
+| aqua | `cyan` | Writing/Editing |
+| red | `red` | Needs attention |
+| orange | `bright_red` | Bash commands |
+| purple | `magenta` | Agent/Skill/MCP |
+| gray | `bright_black` | Thinking/Idle |
+| project | `cyan` | Project name text |
+
+### Custom Colors
+
+Override any color by creating `~/.config/cc-zjstatus/colors.ini`:
+
+```ini
+# Supported formats:
+#   ANSI names:  red, green, blue, bright_blue, magenta, cyan, etc.
+#   Hex codes:   #ff4136
+#   ANSI 256:    0..255
+
+# Only override the colors you want to change.
+# Example: Catppuccin Mocha
+green   = #a6e3a1
+yellow  = #f9e2af
+blue    = #89b4fa
+aqua    = #94e2d5
+red     = #f38ba8
+orange  = #fab387
+purple  = #cba6f7
+gray    = #585b70
+project = #89b4fa
+```
 
 
 
